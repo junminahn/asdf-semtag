@@ -16,7 +16,11 @@ install_tool() {
   [ "x86_64" = "$(uname -m)" ] && arch="x86_64" || arch="i686"
   echo "platform: $platform, arch: $arch"
 
-  [ "linux" = "${platform}" ] && tempdir=$(mktemp -d asdf-semtag.XXXX) || tempdir=$(mktemp -dt asdf-semtag.XXXX)
+  if [ "$TMPDIR" = "" ]; then
+    tempdir=$(mktemp -d)
+  else
+    tempdir=$TMPDIR
+  fi
 
   filename="v${version}.tar.gz"
   tempfile="${tempdir}/${filename}"
