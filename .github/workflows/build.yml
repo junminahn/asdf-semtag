@@ -17,10 +17,18 @@ jobs:
         with:
           path: semtag
 
+      - name: Install asdf
+        uses: asdf-vm/actions/setup@v1
+      - name: Cache tools
+        uses: actions/cache@v2
+        with:
+          path: |
+            /home/runner/.asdf
+          key: ${{ runner.os }}-${{ hashFiles('**/.tool-versions') }}
+
       - name: Move semtag plugin to asdf plugins dir
         run: |
-          mkdir -p ${HOME}/.asdf/plugins/
-          mv semtag ${HOME}/.asdf/plugins/
+          mv semtag ${ASDF_DIR}/plugins/
 
       - name: Run semtag plugin tests
         run: |
