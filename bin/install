@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 install_tool() {
-  local version=$2
-  local install_path=$3
+  local version=$1
+  local install_path=$2
   local bin_install_path="${install_path}/bin"
   local binary_name="semtag"
   local platform=""
@@ -16,11 +16,7 @@ install_tool() {
   [ "x86_64" = "$(uname -m)" ] && arch="x86_64" || arch="i686"
   echo "platform: $platform, arch: $arch"
 
-  if [ "$TMPDIR" = "" ]; then
-    tempdir=$(mktemp -d)
-  else
-    tempdir=$TMPDIR
-  fi
+  [ "linux" = "${platform}" ] && tempdir=$(mktemp -d asdf-semtag.XXXX) || tempdir=$(mktemp -dt asdf-semtag.XXXX)
 
   filename="v${version}.tar.gz"
   tempfile="${tempdir}/${filename}"
