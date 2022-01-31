@@ -1,0 +1,36 @@
+name: Build
+
+on:
+  pull_request:
+    paths-ignore:
+      - "**.md"
+  push:
+    paths-ignore:
+      - "**.md"
+
+jobs:
+  plugin-test:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          path: semtag
+
+      - name: Seup up asdf plugin
+        uses: asdf-vm/actions/plugin-test@v1.1.0
+        with:
+          command: semtag --version
+
+      - name: Move semtag plugin to asdf plugins dir
+        run: |
+          mkdir -p ${HOME}/.asdf/plugins/
+          mv semtag ${HOME}/.asdf/plugins/
+
+      - name: Run semtag plugin tests
+        run: |
+          echo "Trying to list all versions of semtag"
+          asdf list all semtag
+          echo "Trying to install semtag 0.1.1 (the current version)"
+          asdf install semtag 0.1.1
+          semtag --version 2>&1 | grep '0.1.1'
