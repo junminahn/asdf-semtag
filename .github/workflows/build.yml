@@ -17,11 +17,6 @@ jobs:
         with:
           path: semtag
 
-      - name: Seup up asdf plugin
-        uses: asdf-vm/actions/plugin-test@v1.1.0
-        with:
-          command: semtag --version
-
       - name: Move semtag plugin to asdf plugins dir
         run: |
           mkdir -p ${HOME}/.asdf/plugins/
