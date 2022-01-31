@@ -1,0 +1,20 @@
+set -e
+set -o pipefail
+
+github_coordinates="nico2sh/semtag"
+releases_path="https://api.github.com/repos/${github_coordinates}/tags"
+
+cmd="curl -s"
+if [ -n "$GITHUB_API_TOKEN" ]; then
+    cmd="$cmd -H 'Authorization: token $GITHUB_API_TOKEN'"
+fi
+cmd="$cmd $releases_path"
+
+versions=$(
+    eval "$cmd" |
+        tee |
+        grep -oE "name\": *\".{1,30}\"," |
+        sed 's/name\": *\"//;s/\",//'
+)
+
+echo "$versions"
