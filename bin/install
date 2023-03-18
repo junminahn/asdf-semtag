@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -eo pipefail
 
 : "${ASDF_INSTALL_VERSION:?"Missing ASDF_INSTALL_VERSION"}"
 : "${ASDF_INSTALL_PATH:?"Missing ASDF_INSTALL_PATH"}"

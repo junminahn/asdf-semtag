@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -eo pipefail
 
 github_coordinates="nico2sh/semtag"
 releases_path="https://api.github.com/repos/${github_coordinates}/tags"
